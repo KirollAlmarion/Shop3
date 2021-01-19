@@ -5,6 +5,7 @@ using Shop.DataAccess.InMemory;
 using Shop.DataAccess.SQL;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -39,7 +40,7 @@ namespace Shop.WebUserInterface.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product)
+        public ActionResult Create(Product product, HttpPostedFileBase image)
         {
             if (!ModelState.IsValid)
             {
@@ -47,6 +48,11 @@ namespace Shop.WebUserInterface.Controllers
             }
             else
             {
+                if (image !=null)
+                {
+                    product.Image = product.Name + Path.GetExtension(image.FileName);
+                    image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
+                }
                 context.Insert(product);
                 context.SaveChanges();
                 return RedirectToAction("Index");
@@ -80,33 +86,39 @@ namespace Shop.WebUserInterface.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product product, int id)
+        public ActionResult Edit(Product product, int id, HttpPostedFileBase image)
         {
             try
             {
-                Product prodToEdit = context.FindById(id);
-                if (prodToEdit==null)
-                {
-                    return HttpNotFound();
-                }
-                else
-                {
+                //Product prodToEdit = context.FindById(id);
+                //if (prodToEdit==null)
+                //{
+                //    return HttpNotFound();
+                //}
+                //else
+                //{
                     if (!ModelState.IsValid)
                     {
                         return View(product);
                     }
                     else
                     {
+                        if (image != null)
+                        {
+                            product.Image = product.Name + Path.GetExtension(image.FileName);
+                            image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
+                        }
                         //context.Update(product);//ce n'est pas un contexte entity framework
-                        prodToEdit.Name = product.Name;
-                        prodToEdit.Description = product.Description;
-                        prodToEdit.Category= product.Category;
-                        prodToEdit.Prize = product.Prize;
-                        prodToEdit.Image = product.Image;
+                        //prodToEdit.Name = product.Name;
+                        //prodToEdit.Description = product.Description;
+                        //prodToEdit.Category= product.Category;
+                        //prodToEdit.Prize = product.Prize;
+                        //prodToEdit.Image = product.Image;
+                        context.Update(product);
                         context.SaveChanges();
                         return RedirectToAction("Index");
                     }
-                }
+                //}
                 
             }
             catch (Exception)
