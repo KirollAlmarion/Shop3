@@ -1,4 +1,5 @@
-﻿using Shop.Core.Models;
+﻿using Shop.Core.Logic;
+using Shop.Core.Models;
 using Shop.Core.ViewModels;
 using Shop.DataAccess.InMemory;
 using System;
@@ -11,13 +12,13 @@ namespace Shop.WebUserInterface.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRepository contextCategory;
+        IRepository<Product> context;
+        IRepository<ProductCategory> contextCategory;
         //bonne pratique: initialiser la variable dans le constructeur
-        public ProductManagerController()
+        public ProductManagerController()//à mettre à jour si changement de type de stockage de données
         {
-            context = new ProductRepository();
-            contextCategory = new ProductCategoryRepository();
+            context = new InMemoryRepository<Product>();
+            contextCategory = new InMemoryRepository<ProductCategory>();
         }
 
         // GET: ProductManager
