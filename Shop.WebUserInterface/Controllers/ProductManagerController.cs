@@ -1,4 +1,5 @@
 ﻿using Shop.Core.Models;
+using Shop.Core.ViewModels;
 using Shop.DataAccess.InMemory;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace Shop.WebUserInterface.Controllers
     public class ProductManagerController : Controller
     {
         ProductRepository context;
+        ProductCategoryRepository contextCategory;
         //bonne pratique: initialiser la variable dans le constructeur
         public ProductManagerController()
         {
             context = new ProductRepository();
+            contextCategory = new ProductCategoryRepository();
         }
 
         // GET: ProductManager
@@ -26,8 +29,10 @@ namespace Shop.WebUserInterface.Controllers
 
         public ActionResult Create()
         {
-            Product p = new Product();
-            return View(p);
+            ProductCategoryViewModel viewModel = new ProductCategoryViewModel();
+            viewModel.Product = new Product();
+            viewModel.ProductCategories = contextCategory.Collection();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -57,7 +62,10 @@ namespace Shop.WebUserInterface.Controllers
                 }
                 else
                 {
-                    return View(p);
+                    ProductCategoryViewModel viewModel = new ProductCategoryViewModel();
+                    viewModel.Product = p;
+                    viewModel.ProductCategories = contextCategory.Collection();
+                    return View(viewModel);
                 }
             }
             catch (Exception)
