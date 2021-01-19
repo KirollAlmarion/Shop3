@@ -1,6 +1,7 @@
 ﻿using Shop.Core.Logic;
 using Shop.Core.Models;
 using Shop.DataAccess.InMemory;
+using Shop.DataAccess.SQL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Shop.WebUserInterface.Controllers
         //bonne pratique: initialiser la variable dans le constructeur
         public ProductCategoryController()//à mettre à jour si changement de type de stockage de données
         {
-            context = new InMemoryRepository<ProductCategory>();
+            context = new SqlRepository<ProductCategory>(new MyContext());
         }
 
         // GET: ProductManager
