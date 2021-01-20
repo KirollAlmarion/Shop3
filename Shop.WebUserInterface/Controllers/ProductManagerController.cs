@@ -50,7 +50,20 @@ namespace Shop.WebUserInterface.Controllers
             {
                 if (image !=null)
                 {
-                    product.Image = product.Name + Path.GetExtension(image.FileName);
+                    //récupérer l'Id max de la table'
+                    int maxId;
+                    try
+                    {
+                        //si la table est vide, renvoie null
+                        maxId = context.Collection().Max(p => p.Id);
+                    }
+                    catch (Exception)
+                    {
+
+                        maxId = 0;
+                    }
+                    int nextId = maxId + 1;
+                    product.Image = nextId + Path.GetExtension(image.FileName);
                     image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
                 }
                 context.Insert(product);
@@ -105,7 +118,7 @@ namespace Shop.WebUserInterface.Controllers
                     {
                         if (image != null)
                         {
-                            product.Image = product.Name + Path.GetExtension(image.FileName);
+                            product.Image = product.Id + Path.GetExtension(image.FileName);
                             image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
                         }
                         //context.Update(product);//ce n'est pas un contexte entity framework
