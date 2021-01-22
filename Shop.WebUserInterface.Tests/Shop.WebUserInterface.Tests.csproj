@@ -89,6 +89,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ProductManagerControllerTests.cs" />
+    <Compile Include="Mocks\MockContext.cs" />
+    <Compile Include="Mocks\MyFileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -99,6 +102,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Shop.Core\Shop.Core.csproj">
+      <Project>{5fb8b4b9-f25c-443d-ba18-3df92594316d}</Project>
+      <Name>Shop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.DataAccess.InMemory\Shop.DataAccess.InMemory.csproj">
+      <Project>{f6dbb2af-36e4-4ee3-9505-2a8a3ab73ef4}</Project>
+      <Name>Shop.DataAccess.InMemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.DataAccess.SQL\Shop.DataAccess.SQL.csproj">
+      <Project>{c2ef6ce8-8bf4-491b-8e95-099899b48e87}</Project>
+      <Name>Shop.DataAccess.SQL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shop.WebUserInterface\Shop.WebUserInterface.csproj">
       <Project>{D57C15AC-D588-4B39-A350-82602C987F02}</Project>
       <Name>Shop.WebUserInterface</Name>
