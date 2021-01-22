@@ -28,22 +28,24 @@ namespace Shop.WebUserInterface.Controllers
                 lstProd.Add(p);
                 Session["Products"] = lstProd;
                 Session["nbProd"] = 1;
+                Session["Total"] = p.Prize;
             }
             else
             {
                 lstProd = (List<Product>)Session["Products"];
                 lstProd.Add(p);
                 Session["Products"] = lstProd;
+
+                //Total
+                foreach (var item in lstProd)
+                {
+                    total += item.Prize;
+                }
+
+                Session["Total"] = total;
+                Session["nbProd"] = lstProd.Count();
             }
 
-            //Total
-            foreach (var item in lstProd)
-            {
-                total += item.Prize;
-            }
-
-            Session["Total"] = total;
-            Session["nbProd"] = lstProd.Count();
             return RedirectToAction("Index", "Home");
         }
 
