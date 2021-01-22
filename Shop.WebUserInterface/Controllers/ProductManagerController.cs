@@ -72,11 +72,11 @@ namespace Shop.WebUserInterface.Controllers
                     }
                     int nextId = maxId + 1;
 
-                    //product.Image = nextId + Path.GetExtension(image.FileName);
-                    //image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
+                    product.Image = nextId + Path.GetExtension(image.FileName);
+                    image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
 
                     //besoin d'un chemin pour les tests unitaires
-                    image.SaveAs(product.Image);
+                    //image.SaveAs(product.Image);
                 }
                 context.Insert(product);
                 context.SaveChanges();
